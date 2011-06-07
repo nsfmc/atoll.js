@@ -6,7 +6,7 @@
 // "Statistics are like bikinis.  What they reveal is suggestive, 
 //  but what they conceal is vital." -- Aaron Levenstein
 //
-// Date: Tue Jun  7 12:19:55 EDT 2011
+// Date: Tue Jun  7 12:50:18 EDT 2011
 
 
 var atoll = function(){
@@ -58,10 +58,12 @@ var atoll = function(){
   
   
   
-  // Take the harmonic mean of a sample
+  // Take the harmonic mean of a sample (uses the expanded version,
+  // not the reciprocal of the arithmetic mean of reciprocals).
   var meanHar = function(arr){
     var n = size(arr);
-    return n / Sigma(arr, function(x){ return (1/x); });
+    var pj = Pi(arr);
+    return (n * pj) / Sigma(arr,function(x_i){return pj / x_i;});
   };
   
   
@@ -329,6 +331,10 @@ var atoll = function(){
   };
   
   // ### OOP Instance
+  
+  // This uses much the same structure that underscore.js uses to create
+  // a double-duty static/object based function (if you can suggest a better
+  // way, please do! i'm new to this).
   
   // atoll binds all the functions together and is returned
   var atoll = function(data){ return new coverup(data); };

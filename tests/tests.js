@@ -1,6 +1,12 @@
 // Tests for atoll.js
 
+// a prior version of the library was called lies.js 
+// (with great power comes great responsibility!)
 var lies = atoll;
+
+// many of the oop tests are *ridiculously* redundant, but
+// are mostly to test if the oop wrapper breaks in some weird
+// case that i haven't yet thought of.
 
 module("Utilities");
 test('Sigma', function(){
@@ -31,11 +37,17 @@ test("Mean", function(){
   var a = [1,2,3,4];
   var x = lies.mean(a);
   var e = 2.5;
-  equals(x, e, "Mean OK");
+  equals(x, e, "Arithmetic Mean OK");
     
   var l = atoll(a);
-  equals(l.mean(), 2.5, "Mean OOP OK!");
+  equals(l.mean(), 2.5, " OOP Arithmetic Mean OK!");
   
+  var ob = atoll(a);
+  var geom_exact = Math.pow(24 , 1/4);
+  equals(atoll.meanGeo(a), geom_exact, "Geometric Mean OK!");
+  equals(ob.meanGeo(), geom_exact, "OOP Geometric Mean OK!");
+  equals(atoll.meanHar(a), geom_exact, "Harmonic Mean OK!");
+  equals(ob.meanHar(), 48/25, "OOP Harmonic Mean OK!");
 });
 
 test("Central Moment for varying i",function(){
