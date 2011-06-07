@@ -38,9 +38,6 @@ The code is fairly self-documenting, so if you're actually a bit hazy on the nat
 
 It also includes a fairly comprehensive test-suite which attempts, as often as is possible, to compare a calculation with an exact numerical quantity.
 
-### requirements
-
-As it is currently coded, atoll.js assumes that `Array.prototype.map` and `Array.prototype.reduce` are present, which may pose a problem if you are targeting older browsers. If this is a significant problem, I may consider adding versions of them to the package.
 
 ## documentation
 
