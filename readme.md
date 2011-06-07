@@ -3,7 +3,7 @@
 > Statistics are like bikinis.  What they reveal is suggestive, but what they conceal is vital.  
 -- Aaron Levenstein
 
-atoll.js is a simple statistical package written in javascript.
+atoll.js is a small and simple statistical package written in javascript.
 
 It implements many popular single-variable statistical methods that you would expect to find, for example, on a graphing calculator. It also has numerically stable implementations for variance/std dev in case you have very weird data.
 
@@ -36,9 +36,11 @@ It currently supports:
 
 The code is fairly self-documenting, so if you're actually a bit hazy on the nature of some stats function, you can refresh yourself on how it was derived by reading through the code, which almost always uses the standard notation that you'll see in the equation. It has fairly literate docco documentation in the comments which references how many of the functions are implemented both historically and technically.
 
-It also includes a fairly comprehensive test-suite which attempts, as often as is possible, to compare a calculation with an exact version.
+It also includes a fairly comprehensive test-suite which attempts, as often as is possible, to compare a calculation with an exact numerical quantity.
 
+### requirements
 
+As it is currently coded, atoll.js assumes that `Array.prototype.map` and `Array.prototype.reduce` are present, which may pose a problem if you are targeting older browsers. If this is a significant problem, I may consider adding versions of them to the package.
 
 ## documentation
 
@@ -59,7 +61,9 @@ Part of any stats toolkit is the basic set of single variable functions, `min`, 
 `Sigma` is a shorthand for calling `arr.map(f).reduce(sum)` on some array. Because you can plug in any `f`, it is reasonably versatile (and shows up quite often in the code, as summations are common in stats). If you don't pass any function to sigma, it assumes `f` is the identity function.
 
     a.Sigma() // ==> 28
-    // or, called statically
+    
+    // or, called statically with a function that shifts
+    // the list to => [3...9]
     atoll.Sigma(pop, function(x_i){return x_i + 2;}) // ==> 42
 
 Similarly, `Pi` is used to take product of a given array and behaves similarly to Sigma, so you can, for example, take the *Geometric Mean* by doing the following:
@@ -152,7 +156,7 @@ In actuality, it is these functions which are used as the baseline in atoll, the
 
 ### Histograms
 
-The histogram api is still being written, but the idea is to do two things
+The histogram api(if you can call it that) is still being written, but the idea is to do two things
 
 * similar to `atoll.quartiles`, return bin width & number of bins for a given (or supplied) binning function. 
 * provide an array of the histogram heights for the given binning function.
