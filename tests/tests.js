@@ -46,7 +46,8 @@ test("Mean", function(){
   var geom_exact = Math.pow(24 , 1/4);
   equals(atoll.meanGeo(a), geom_exact, "Geometric Mean OK!");
   equals(ob.meanGeo(), geom_exact, "OOP Geometric Mean OK!");
-  equals(atoll.meanHar(a), geom_exact, "Harmonic Mean OK!");
+  
+  equals(atoll.meanHar(a), 48/25, "Harmonic Mean OK!");
   equals(ob.meanHar(), 48/25, "OOP Harmonic Mean OK!");
 });
 
