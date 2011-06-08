@@ -58,6 +58,22 @@ var atoll = function(){
   };
   
   
+  // a local filter function if it's not provided by Array.prototype
+  var filter = function(obj, callback, context) {
+    var nativeFilter = Array.prototype.filter;
+    var results = [];
+    if(obj == null) { return results; }
+    if(nativeFilter && obj.filter === nativeFilter){
+      return obj.filter(callback, context);
+    }
+    for(var i=0; i < obj.length; i += 1){
+      var val = obj[i]; // save val in case the callback mutates it
+      if( callback.call(context, obj[i], i, obj) ){ results.push(val); }
+    }
+    return results;
+  };
+  
+  
   
   // min and max take the min and max of an array
   var min = function(arr){ return Math.min.apply(null, arr); };
