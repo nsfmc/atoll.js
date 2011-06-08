@@ -162,6 +162,40 @@ var atoll = function(){
   
   
   
+  // the mode is a somewhat controversial function which gives you the
+  // element or elements in your sample which are 'the most popular'.
+  // Mathematica calls this 'commonest'. This function *always* returns
+  // an array and will also work on non-numeric data.
+  var mode = function(arr){
+    var counter = function(collection,val){
+      collection[val] = (collection[val] || {});
+      // rather than incrementing collection[val], save the value
+      // explicitly because getting keys back will stringify them
+      collection[val]["value"] = collection[val]["value"] || val;
+      collection[val]["count"] = (collection[val]["count"] || 0) + 1;
+      return collection;
+    };
+    var freqs = reduce(arr, counter, {});
+
+    // map over all the elements we collected and array-ify them as freqArr
+    // with `[key, keyCount]`
+    var freqArr = [];
+    for (key in freqs){
+      if (freqs.hasOwnProperty(key)){
+        freqArr.push([freqs[key]["value"], freqs[key]["count"]]);
+      }
+    }
+    
+    var maximum = max( map(freqArr, function(x){ return x[1]; }) );
+    var common = filter(freqArr, function(v){ return v[1] === maximum; });
+    var commonest = map(common, function(v){ return v[0]; });
+    // sort in increasing order (if numeric) otherwise you're on your own
+    commonest = commonest.sort(function(a,b){return a-b;});
+    return commonest;
+  };
+  
+  
+  
   // Quartiles are calculated similar to the median. The second quartile *is* 
   // the median, and `q1`/`q3` are the medians of the lower/upper halves, respectively.
   // 
@@ -386,6 +420,7 @@ var atoll = function(){
     "mean" : mean,
     "meanGeo" : meanGeo,
     "meanHar" : meanHar,
+    "mode" : mode,
     "median" : median,
     "centralMoment" : centralMoment,
     

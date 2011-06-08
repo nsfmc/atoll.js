@@ -51,6 +51,20 @@ test("Mean", function(){
   equals(ob.meanHar(), 48/25, "OOP Harmonic Mean OK!");
 });
 
+test("Mode", function(){
+  var a = [1,2,2,3,4];
+  var ob = atoll(a);
+  deepEqual(ob.mode(), [2], "Mode A-OK!");
+  
+  var b = [1,2,2,3,4,4];
+  var ob2 = atoll(b);
+  deepEqual(ob2.mode(), [2,4], "Bimodal Mode A-OK!");
+  
+  var c = ["cat", "dog", "dog", "squirrel", "shoe", "cat", 2];
+  var ob3 = atoll(c);
+  deepEqual(ob3.mode(), ["cat","dog"], "Mode on strings ok");
+});
+
 test("Central Moment for varying i",function(){
   var pop = [1,2,3,4,5,6];
   equals(lies.centralMoment(pop), 0, "central moment default (i=0) ok");
