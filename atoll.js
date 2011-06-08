@@ -13,6 +13,52 @@ var atoll = function(){
   
   // ## utility functions
   
+  
+  
+  // a local map function if it's not provided by Array.prototype
+  var map = function(obj, callback, context) {
+    var nativeMap = Array.prototype.map;
+    var results = [];
+    if (obj == null) { return results; };
+    if (nativeMap && obj.map === nativeMap) { return obj.map(callback, context); };
+    for(var i = 0; i < obj.length; i += 1){
+      results[results.length] = callback.call(context, obj[i], i, obj);
+    };
+    return results;
+  };
+  
+  
+  
+  // a local reduce function if it's not provided by the Array.prototype
+  var reduce = function(obj, callback, initial) {
+    var nativeReduce = Array.prototype.reduce;
+    var init = (initial !== undefined); // init reveals if an initial val. passed
+    if (obj == null) { obj = []; }; // feed null array to native funcs, let them deal
+    if (nativeReduce && obj.reduce === nativeReduce) {
+      return init ? obj.reduce(callback, initial) : obj.reduce(callback);
+    };
+    
+    // `curr` is an accumulator for the final reduced value.
+    var curr, len = obj.length, i;
+    if(!init){
+      for(i = 0 ; i === len;){
+        // throw error if no initial value and empty array passed
+        throw new TypeError("Reduce of empty array with no initial value");
+      }
+      // these two following lines seed `curr` so that the callback works
+      // as expected if an initial value is passed in.
+      curr = obj[i++]; // curr = obj[0] and now `i == 1`
+    }else{
+      curr = initial; // curr = initial and `i == 0`
+    }
+    for(i = i || 0; i < len; i += 1){
+      curr = callback.call(undefined, curr, obj[i], obj);
+    }
+    return curr;
+  };
+  
+  
+  
   // min and max take the min and max of an array
   var min = function(arr){ return Math.min.apply(null, arr); };
   var max = function(arr){ return Math.max.apply(null, arr); };
@@ -27,50 +73,11 @@ var atoll = function(){
   // it's possible that neither map or reduce are available, as these 
   // are *'new'* as of 2005-2008, so, ummm... here's mapReduce
   var mapReduce = function(arr, mapFunc, reduceFunc){
-    
-    var map = function(obj, callback, context) {
-      var nativeMap = Array.prototype.map;
-      var results = [];
-      if (obj == null) return results;
-      if (nativeMap && obj.map === nativeMap) return obj.map(callback, context);
-      for(var i=0; i<obj.length; i += 1){
-        results[results.length] = callback.call(context, obj[i], i, obj);
-      };
-      return results;
-    };
-    
-    var reduce = function(obj, callback, initial) {
-      var nativeReduce = Array.prototype.reduce;
-      var init = (initial !== undefined); // init reveals if an initial val. passed
-      if (obj == null) { obj = []; }; // feed null array to native funcs, let them deal
-      if (nativeReduce && obj.reduce === nativeReduce) {
-        return init ? obj.reduce(callback, initial) : obj.reduce(callback);
-      };
-      
-      // `curr` is an accumulator for the final reduced value.
-      var curr, len = obj.length, i;
-      if(!init){
-        for(i = 0 ; i === len;){
-          // throw error if no initial value and empty array passed
-          throw new TypeError("Reduce of empty array with no initial value");
-        }
-        // these two following lines seed `curr` so that the callback works
-        // as expected if an initial value is passed in.
-        curr = obj[i++]; // curr = obj[0] and now `i == 1`
-      }else{
-        curr = initial; // curr = initial and `i == 0`
-      }
-      for(i = i || 0; i < len; i += 1){
-        curr = callback.call(undefined, curr, obj[i], obj);
-      }
-      return curr;
-    };
-    
     var mappedArray = map(arr, mapFunc);
     var reducedValue = reduce(mappedArray, reduceFunc);
     return reducedValue;
-    
   };
+  
   
   
   // `Sigma` is used to take sums on arrays without calling both map and reduce
@@ -91,6 +98,7 @@ var atoll = function(){
     
     return mapReduce(arr, mapFunc, prod);
   };
+  
   
   
   // ## Basic Stats functions
