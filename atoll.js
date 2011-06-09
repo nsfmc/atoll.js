@@ -219,8 +219,11 @@ var atoll = function(){
     // These are outlier cutoff points
     var lowerFence = q1 - (1.5 * iqr);
     var upperFence = q3 + (1.5 * iqr);
+    var insiders = filter(arr, function(x){return x >= lowerFence && x <= upperFence;});
+    var outsiders = filter(arr, function(x){return x < lowerFence || x > upperFence;});
     return { "q1":q1, "q2":q2, "q3":q3, "iqr":iqr, 
-      "lowerFence":lowerFence, "upperFence":upperFence };
+      "lowerFence":lowerFence, "upperFence":upperFence,
+      "insiders":insiders, "outsiders":outsiders };
   };
   
   
