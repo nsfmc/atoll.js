@@ -27,7 +27,7 @@ suppose you have some set of data in an array, you can operate on it in two ways
 It currently supports:
 
 * min/max
-* mean (arithmetic, geometric, & harmonic), median
+* mean (arithmetic, geometric, & harmonic), median, & mode
 * sample central moments
 * quartiles (q1,q2,q3, & the iqr)
 * variance & standard deviation (both sample, population)
@@ -70,7 +70,7 @@ Similarly, `Pi` is used to take product of a given array and behaves similarly t
 
 ### Basic Stats
 
-Most basic stats *except the mode* are calculated. Included in basic stats are the median, quartiles (q1,q3, iqr and lower/upper fences), mean (arithmetic, geometric, harmonic).
+Most basic stats are calculated. Included in basic stats are the median, quartiles (q1,q3, iqr and lower/upper fences), mean (arithmetic, geometric, harmonic) and mode.
 
 Using the quartile function, you should be able to roll your own boxplots with relatively little hassle.
 
@@ -85,6 +85,13 @@ Using the quartile function, you should be able to roll your own boxplots with r
     b.quartiles() 
     // {"q1":1.5,"q2":3,"q3":5,"iqr":3.5,
     // "lowerFence":-3.75,"upperFence":10.25}
+    
+
+Mode is included as well! The result is always an array because it is possible that you have a multi-modal distribution. In any case, be cautious.
+    
+    var pop2 = [1,2,3,4,4,6]
+    var b2 = atoll(pop2);
+    b2.mode() // [4]
 
 
 ### Variance & Standard Deviation
