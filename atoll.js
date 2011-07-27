@@ -1,4 +1,4 @@
-// atoll.js v0.6
+// atoll.js @ATOLL_VER
 //
 // Copyright 2011 Marcos A. Ojeda, generic.cx
 // Licensed under the MIT License
@@ -6,7 +6,7 @@
 // "Statistics are like bikinis.  What they reveal is suggestive, 
 //  but what they conceal is vital." -- Aaron Levenstein
 //
-// Date: Tue Jun  7 12:50:18 EDT 2011
+// Date: @TIP_DATE
 
 
 var atoll = function(){
@@ -379,6 +379,15 @@ var atoll = function(){
   // unobtrusive histogram toolkit. Please feel free to let me know if you have
   // any ideas or suggestions on that front. `marcos at generic dot cx`.
   
+  
+  // range here is not a flexible implementation, you have to pass all three
+  // parameters in in order to get your correct array
+  var range = function(start, stop, step){
+    step = step || 1;
+    for(var i=start,acc=[]; start + i*step <= stop; acc.push(i*step), i+=1){};
+    return acc;
+  };
+  
   var sturgesFormula = function(arr){
     var n = size(arr);
     var k = Math.ceil((Math.log(n)/Math.log(2))+1);
@@ -480,6 +489,15 @@ var atoll = function(){
   
   // mix in exported functions
   atoll.mixin(exported);
+  
+  // export for use in CommonJS
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = atoll;
+  } else {
+    root['atoll'] = atoll;
+  }
+  
+  atoll.VERSION = '@ATOLL_VER';
   
   return atoll;
 
