@@ -34,7 +34,7 @@ atoll : ${ATOLL}
 ${ATOLL}: ${DIST_DIR}
 	@@echo "Building" ${ATOLL} ${ATOLL_VER}
 	
-	@@cat atoll.js | \
+	@@cat lib/atoll.js | \
 		sed 's/@TIP_DATE/'"${DATE}"'/' | \
 		${VERSION} > ${ATOLL};
 
