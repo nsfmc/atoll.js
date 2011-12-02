@@ -493,8 +493,6 @@ var atoll = function(){
   // export for use in CommonJS
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = atoll;
-  } else {
-    root['atoll'] = atoll;
   }
   
   atoll.VERSION = '@ATOLL_VER';
