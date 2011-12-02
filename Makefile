@@ -14,8 +14,14 @@ ATOLL_MIN = ${DIST_DIR}/atoll.min.js
 ATOLL_VER = $(shell cat version.txt)
 VERSION = sed "s/@ATOLL_VER/${ATOLL_VER}/"
 
-DATE = $(shell hg tip --template "{date|date}")
+DATE_GIT = $(shell git log -1 --pretty=format:%ad)
 
+ifdef DATE_GIT
+DATE = ${DATE_GIT}
+else
+DATE_HG = $(shell hg tip --template "{date|date}")
+DATE = ${DATE_HG}
+endif
 
 core: atoll min
 	@@echo "Atoll built!"
