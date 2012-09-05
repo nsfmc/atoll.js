@@ -8,9 +8,15 @@
     "url": "git://github.com/nsfmc/atoll.js.git"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "uglify" : "1.3.x"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
-  }
+  },
+  "scripts": {
+    "install": "make atoll"
+  },
+  "main": "./dist/atoll.js"
 }
