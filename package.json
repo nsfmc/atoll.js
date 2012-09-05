@@ -1,0 +1,22 @@
+{
+  "author": "Marcos Ojeda <subliminal@gmail.com> (http://generic.cx/)",
+  "name": "atoll",
+  "description": "Atoll is a small descriptive statistics library",
+  "version": "0.7.3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nsfmc/atoll.js.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "uglify" : "1.3.x"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "install": "make atoll"
+  },
+  "main": "./dist/atoll.js"
+}
