@@ -1,6 +1,6 @@
 # atoll.js
 
-> Statistics are like bikinis.  What they reveal is suggestive, but what they conceal is vital.  
+> Statistics are like bikinis.  What they reveal is suggestive, but what they conceal is vital.
 -- Aaron Levenstein
 
 atoll.js is a small and simple statistical package written in javascript.
@@ -12,10 +12,10 @@ It implements many popular single-variable statistical methods that you would ex
 suppose you have some set of data in an array, you can operate on it in two ways:
 
     data = [1,2,3,4,5,6];
-    
+
     // static methods
     stdDev = atoll.stdDev(data);
-    
+
     // oop methods
     d = atoll(data);
     stdDev = d.stdDev();
@@ -50,7 +50,7 @@ Part of any stats toolkit is the basic set of single variable functions, `min`, 
 
     var pop = [7, 1, 2, 6, 5, 4, 3]
     var a = atoll(pop)
-    
+
     a.min() // ==> 1
     a.max() // ==> 7
     a.size() // ==> 7
@@ -58,7 +58,7 @@ Part of any stats toolkit is the basic set of single variable functions, `min`, 
 `Sigma` is a shorthand for calling `arr.map(f).reduce(sum)` on some array. Because you can plug in any `f`, it is reasonably versatile (and shows up quite often in the code, as summations are common in stats). If you don't pass any function to sigma, it assumes `f` is the identity function.
 
     a.Sigma() // ==> 28
-    
+
     // or, called statically with a function that shifts
     // the list to => [3...9]
     atoll.Sigma(pop, function(x_i){return x_i + 2;}) // ==> 42
@@ -76,19 +76,19 @@ Using the quartile function, you should be able to roll your own boxplots with r
 
     var pop = [1,2,4,6];
     var b = atoll(pop);
-    
+
     b.median() // ==> 3
     b.mean() // ==> 3.25
     b.meanGeo() // ==> 2.6321480259049848
     b.meanHar() // ==> 2.0869565217391304
-    
-    b.quartiles() 
+
+    b.quartiles()
     // {"q1":1.5,"q2":3,"q3":5,"iqr":3.5,
     // "lowerFence":-3.75,"upperFence":10.25}
-    
+
 
 Mode is included as well! The result is always an array because it is possible that you have a multi-modal distribution. In any case, be cautious.
-    
+
     var pop2 = [1,2,3,4,4,6]
     var b2 = atoll(pop2);
     b2.mode() // [4]
@@ -100,13 +100,13 @@ Variance and standard deviation are two useful statistical measures that you'll 
 
     var pop = [2,4,4,4,5,5,7,9];
     var c = atoll(pop);
-    
+
     // the default stdDev function takes the unbiased sample
     // standard deviation. To take the population std dev, use
     // the stdDevPop function.
     c.stdDev() // ==> 2.138089935299395
     c.stdDevPop() // ==> 2
-    
+
     // same goes for variance
     c.variance() // ==> 4.571428571428571
     c.variancePop() // ==> 4
@@ -138,7 +138,7 @@ If this is all you care about, *read no further!*
 
 #### An Aside on Central Moments
 
-Mathematica and other, more precisely worded applications, will give you 'kurtosis/skewness proper' which are also sometimes called Population Skewness/Kurtosis and can be found by using `kurtosisPop()` & `skewnessPop`. 
+Mathematica and other, more precisely worded applications, will give you 'kurtosis/skewness proper' which are also sometimes called Population Skewness/Kurtosis and can be found by using `kurtosisPop()` & `skewnessPop`.
 
 It turns out these are derived from the Central Moments of a given population/sample. As a result, there is a `centralMoment(arr, k)` function which will give you the *kth* central sample moment for some sample *arr*.
 
@@ -154,7 +154,7 @@ Conveniently for this example, *Kurtosis Proper* is defined as *(m<sub>4</sub> /
     var B_2 = ( m4 / (m2 * m2) ); // 6.8460360095745285
     mk.kurtosisPop(); // 6.8460360095745285
 
-You can check this against Mathematica if you'd like by [trying the problem in Wolfram Alpha](http://goo.gl/0CVLI). (n.b. `skewnessPop` is also calculated in a similar way, there are citations in the annotated source). To add to the confusion, when many people refer to Kurtosis, they refer to *Excess Kurtosis* which is defined as *&gamma;<sub>2</sub> = &beta;<sub>2</sub> - 3*. 
+You can check this against Mathematica if you'd like by [trying the problem in Wolfram Alpha](http://goo.gl/0CVLI). (n.b. `skewnessPop` is also calculated in a similar way, there are citations in the annotated source). To add to the confusion, when many people refer to Kurtosis, they refer to *Excess Kurtosis* which is defined as *&gamma;<sub>2</sub> = &beta;<sub>2</sub> - 3*.
 
 In actuality, it is these functions which are used as the baseline in atoll, the sample variants are multiplied by the same un-biasing coefficient which is used in all the common spreadsheet packages (again, see the annotated source for more information.)
 
@@ -162,7 +162,7 @@ In actuality, it is these functions which are used as the baseline in atoll, the
 
 The histogram api(if you can call it that) is still being written, but the idea is to do two things
 
-* similar to `atoll.quartiles`, return bin width & number of bins for a given (or supplied) binning function. 
+* similar to `atoll.quartiles`, return bin width & number of bins for a given (or supplied) binning function.
 * provide an array of the histogram heights for the given binning function.
 
 I think this is basic enough while still being useful and would make it trivial to graph a histogram using a package like d3 or protovis. Take a look at the source! It's not quite ready yet, but suggestions/pull requests are welcome, feel free to drop me a line `marcos at generic dot cx`.
